@@ -7,27 +7,67 @@
     <link rel="stylesheet" href="./CSS/index.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script> 
+   
+   <script  type="module">
+   import interact from 'https://cdn.interactjs.io/v1.10.1/interactjs/index.js';
+   const position = { x: 0, y: 0 }
+//    const resizableItems=document.querySelectorAll('.resizable')
+//    for(const item of resizableItems){
+//        item.addEventListener('mousedown',resize)
+//    }
+//    function resize(e){
+//        console.log("ada")
+//     const className=this.className
+//     console.log(className)
+    interact('.resizable')
+    .resizable({
+    edges: { top: true, left: true, bottom: true, right: true },
+    listeners: {
+      move: function (event) {
+        let { x, y } = event.target.dataset
+
+        x = (parseFloat(x) || 0) + event.deltaRect.left
+        y = (parseFloat(y) || 0) + event.deltaRect.top
+
+        Object.assign(event.target.style, {
+          width: `${event.rect.width}px`,
+          height: `${event.rect.height}px`,
+          transform: `translate(${x}px, ${y}px)`
+        })
+
+        Object.assign(event.target.dataset, { x, y })
+      }
+    }
+  })
+   //}
+   
+    
+    </script>
 </head>
 <body>
     <div class="container">   
+        
         <div class="flowchart-items source">
             <div class="heading">Flow chart</div> 
             <hr />
             <div class="items"> 
-               
                 <!-- <div id="diamond" class="item diamond" draggable="true"></div> -->
-                <br>
-               
-                 <div id="oval" class="item oval" draggable="true"></div>
-                
-                <div id="parallelogram" class="item parallelogram" draggable="true"></div>
-                <div id="rectangle" class="item rectangle" draggable="true"></div>
-                 <div id="arrow" class="item arrow" draggable="true">
-                   <i class='fas fa-arrow-right ' style='font-size:26px;color: #5e5e5e;'></i>
-                </div>
+               <table>
+                   <tr>
+                       <td><div id="oval" class="item oval" draggable="true"></div></td>
+                   </tr>
+                   <tr><td><div id="rectangle" class="item rectangle" draggable="true"></div></td></tr>
+                   <tr><td><div id="parallelogram" class="item parallelogram" draggable="true"></div></td></tr>
+                   <tr><td><div id="line" draggable="true" class="item line"></div></td></tr>
+               </table>
             </div>
+            <div class="delete" id="delete">Drag 
+                <br> here <br> to <br> delete</div>  
         </div>
+        
+
+        
     <div class="target">
         
         <div class="empty larger" id="container"></div>
@@ -38,7 +78,12 @@
         <!-- <div class="empty"></div> -->
         
     </div>
+  
+    <div hidden>
+        <input  id="input" placeholder="Title"/>
+    </div>
     </div>
     <script src="./JavaScript/index.js" ></script>
+    
 </body>
 </html>
